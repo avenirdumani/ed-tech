@@ -1,2 +1,9 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
+
+html,
+body,
+#__nuxt {
+  height: 100% !important;
+  width: 100% !important;
+}

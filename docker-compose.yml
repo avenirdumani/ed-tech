@@ -1,0 +1,40 @@
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: avi
+      POSTGRES_PASSWORD: Nensi12345
+      POSTGRES_DB: ed-tech-db
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U avi -d ed-tech-db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    environment:
+      DB_URL: postgresql://avi:Nensi12345@db:5432/ed-tech-db
+      SECRET_KEY: 6c4227ebee3b88ada73289b386e2d6d817cdbe46397ecd3e64f020fcd01fc56b
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    environment:
+      # SSR is disabled so the browser makes API calls — use the host-exposed port
+      BASE_API_URL: http://localhost:8000
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
