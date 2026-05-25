@@ -37,7 +37,7 @@ def test_applicant_application_flow(
     access_token = response_data.get("access_token")
     auth_headers = {"Authorization": f"Bearer {access_token}"}
 
-    response = api_client.get("/programs")
+    response = api_client.get("/programs", headers=auth_headers)
     assert response.status_code == status.HTTP_200_OK
     response_data: dict[str, Any] = response.json()
     listed_ids = [program.get("id") for program in response_data.get("items")]
