@@ -1,6 +1,6 @@
 # Ed-Tech Demo
 
-[![Demo Video](https://cdn.loom.com/sessions/thumbnails/77655a7214ea4ceeaed5b309c9c27a8c-with-play.gif)](https://www.loom.com/share/77655a7214ea4ceeaed5b309c9c27a8c)
+**[Watch Demo Video](https://www.loom.com/share/77655a7214ea4ceeaed5b309c9c27a8c)**
 
 A full-stack ed-tech application with a Python backend and a Nuxt frontend.
 
@@ -101,20 +101,6 @@ make run-tests
 cd frontend
 npm test
 ```
-
-### Testing strategy
-
-The goal is the highest achievable coverage across all layers, with tests split into three distinct tiers:
-
-**Unit tests** — isolated, fast, no I/O. Cover individual functions, validators, service methods, and Vue composables. Every business-logic path (edge cases, error branches, computed values) should have a dedicated unit test. Backend uses Pytest; frontend uses Vitest.
-
-**Integration tests** — verify that components work correctly together. On the backend this means hitting a real test database (no mocks) to exercise the full request → router → service → ORM → DB round-trip. On the frontend this means mounting components with a real Pinia store and a stubbed API layer to validate that data flows and UI state are correct end-to-end within the browser.
-
-**E2E tests** — full workflow coverage driven against a running stack. Playwright will script realistic user journeys (applicant signup → profile completion → application submission; counselor review → document rejection → applicant notification; admin org setup → invite flow) using multiple fixture datasets to cover happy paths, validation failures, permission boundaries, and edge-case data shapes. These run in CI against the ephemeral Docker Compose environment.
-
-**Coverage targets** — unit + integration should reach ≥ 90 % line coverage on the backend (enforced by `pytest-cov` with a `--cov-fail-under` threshold) and ≥ 85 % on the frontend. E2E tests complement coverage by exercising cross-layer paths that unit tests cannot reach.
-
----
 
 ## Features
 
